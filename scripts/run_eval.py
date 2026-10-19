@@ -3,6 +3,7 @@
     python scripts/run_eval.py
 Writes data/eval/report.json and web/public/data/eval.json (shown on the website's Evaluation page).
 """
+import argparse
 import datetime as dt
 import json
 import sys
@@ -18,6 +19,10 @@ from copilot.retrieve import Retriever  # noqa: E402
 
 
 def main():
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--min-accuracy", type=float, default=0, help="fail (exit 1) if any score falls below this %%")
+    args = ap.parse_args()
+
     chunks, vectors = load_index()
     reranker = Reranker()
     retriever = Retriever(chunks, vectors, Embedder(), reranker)
@@ -35,6 +40,12 @@ def main():
 
     for path in (config.ROOT / "data" / "eval" / "report.json", config.SITE_DATA / "eval.json"):
         path.write_text(json.dumps(report, indent=1, ensure_ascii=False) + "\n", encoding="utf-8")
+
+    # quality gate: a rebuild that scores worse than this is not published
+    s = report["summary"]
+    worst = min(v for k, v in s.items() if k.endswith("_pct") and v is not None)
+    if worst < args.min_accuracy:
+        raise SystemExit(f"QUALITY GATE FAILED: lowest score {worst}% is below {args.min_accuracy}% - not publishing this index")
 
 
 if __name__ == "__main__":

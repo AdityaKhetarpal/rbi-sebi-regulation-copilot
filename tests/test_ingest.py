@@ -16,6 +16,14 @@ def test_find_pdf_skips_ombudsman_and_finds_main_direction():
     assert "<a" not in title
 
 
+def test_find_pdf_prefers_the_master_direction_over_a_notification():
+    page = """<td><span>Prepaid Payment Instruments - notification <a href='https://rbidocs.rbi.org.in/rdocs/notification/PDFs/NOT385.PDF'>pdf</a></td>
+<td>Master Direction on Prepaid Payment Instruments (PPIs) <a href='https://rbidocs.rbi.org.in/rdocs/notification/PDFs/82MDPPIS27.PDF'>pdf</a></td>"""
+    url, title = find_pdf(page, "Prepaid Payment Instruments")
+    assert url.endswith("82MDPPIS27.PDF")
+    assert title.startswith("Master Direction on Prepaid Payment Instruments")
+
+
 def test_find_pdf_returns_none_when_missing():
     assert find_pdf(PAGE, "Digital Lending") is None
 

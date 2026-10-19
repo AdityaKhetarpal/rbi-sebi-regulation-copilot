@@ -1,5 +1,5 @@
 # Every Monday (or on demand): download the current RBI Master Directions, rebuild the search index,
-# re-run the evaluation, test the website on the real data, and commit the results if anything changed.
+# re-run the evaluation, test the website on the real data, and commit the results only if the scores stay high.
 name: Build index
 
 on:
@@ -32,8 +32,9 @@ jobs:
       - name: Download, chunk and embed
         run: python scripts/build_index.py
 
+      # quality gate: if RBI's page changes and a wrong PDF is picked up, scores drop and nothing is committed
       - name: Evaluate the full pipeline
-        run: python scripts/run_eval.py
+        run: python scripts/run_eval.py --min-accuracy 90
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}   # optional: without it the extractive engine is scored
 
@@ -42,9 +43,8 @@ jobs:
           node-version: "22"
           cache: npm
           cache-dependency-path: web/package-lock.json
-      - name: Test the website on the real documents
+      - name: Test the website on the real documents (second quality gate)
         working-directory: web
-        continue-on-error: true            # a failure here flags the site threshold for review but still saves the index
         run: npm ci && npm test
 
       - name: Commit the new index
