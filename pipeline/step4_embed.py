@@ -42,7 +42,10 @@ def map_2d(vectors):
     centred = vectors - vectors.mean(axis=0)
     _, _, directions = np.linalg.svd(centred, full_matrices=False)
     xy = centred @ directions[:2].T
-    return (xy - xy.min(axis=0)) / (xy.max(axis=0) - xy.min(axis=0))     # scale both axes to 0..1
+    # scale into 0..1 with ONE factor for both axes, so distances keep their proportions, then centre it
+    size = xy.max(axis=0) - xy.min(axis=0)
+    scale = size.max() or 1.0
+    return (xy - xy.min(axis=0)) / scale + (1 - size / scale) / 2
 
 
 def similarity_demo():
