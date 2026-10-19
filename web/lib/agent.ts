@@ -1,48 +1,10 @@
-// The website's question answering: retrieve -> (refuse if off-topic) -> write with the best available engine.
-// Also the agent: Claude picks tools in a loop. Kept free of Next.js so it can be tested directly.
+// STEP 8 on the website - the agent (same idea as pipeline/step8_agent.py).
+// Claude gets tools (search, read a passage, list documents) and decides, in a loop, what to look up before answering.
 
-import type { AskResult, Chunk, Source, Step } from "@/lib/types";
-import { Searcher, RELEVANCE, extractive } from "@/lib/search";
-import { REFUSAL, SYSTEM, buildContext, citations, numbered } from "@/lib/prompt";
+import type { AskResult, Chunk, Step } from "@/lib/types";
+import { Searcher } from "@/lib/search";
+import { MODEL, REFUSAL, citations, numbered, textOf, type LLM } from "@/lib/answer";
 
-export const MODEL = process.env.ASK_MODEL ?? "claude-haiku-5-5";
-export const TOP_K = 6; // keyword search needs one more passage than the Python hybrid search (measured on the eval set)
-
-// the only part of the Anthropic client we use, so tests can pass a fake
-type Block = { type: string; text?: string; id?: string; name?: string; input?: Record<string, unknown> };
-export type LLM = { messages: { create(params: Record<string, unknown>): Promise<{ stop_reason: string | null; content: Block[] }> } };
-
-const textOf = (content: Block[]) => content.filter((b) => b.type === "text").map((b) => b.text ?? "").join("\n").trim();
-
-function refusal(question: string, sources: Source[], engine = "relevance check"): AskResult {
-  return { question, answer: REFUSAL, engine, refused: true, citations: [], sources };
-}
-
-// ---------- RAG: one search, one answer ----------
-export async function answer(question: string, s: Searcher, client: LLM | null, regulator?: string): Promise<AskResult> {
-  const sources = numbered(s.search(question, TOP_K, regulator));                   // R
-  if (!sources.length || s.relevance(question, sources) < RELEVANCE) return refusal(question, sources);
-
-  if (client) {
-    try {
-      const r = await client.messages.create({
-        model: MODEL, max_tokens: 400, system: SYSTEM,
-        messages: [{ role: "user", content: `Sources:\n\n${buildContext(sources)}\n\nQuestion: ${question}` }],  // A
-      });
-      const text = textOf(r.content);                                                   // G
-      return { question, answer: text, engine: `Claude (${MODEL})`, refused: text.startsWith(REFUSAL.slice(0, 25)),
-               citations: citations(text, sources), sources };
-    } catch (err) {
-      console.error("[ask] Claude failed, falling back to extractive:", err);
-    }
-  }
-  const text = extractive(question, sources, s.bm);
-  if (!text) return refusal(question, sources, "Extractive (exact sentences, no AI)");
-  return { question, answer: text, engine: "Extractive (exact sentences, no AI)", refused: false,
-           citations: citations(text, sources), sources };
-}
-
-// ---------- Agent: Claude decides which tools to call ----------
 export const AGENT_SYSTEM = `You are a compliance research assistant for Indian financial regulations (RBI and SEBI).
 You can only use facts returned by your tools.
 1. Plan what you need. Comparisons or multi-part questions need one search per part.

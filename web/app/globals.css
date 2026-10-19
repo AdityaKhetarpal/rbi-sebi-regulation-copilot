@@ -166,3 +166,21 @@ td.num, th.num { text-align: right; white-space: nowrap; }
   .ask-controls { justify-content: stretch; }
   .ask-controls > * { flex: 1; }
 }
+
+/* ---------- how it works: one question, step by step ---------- */
+.split { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; margin-top: 24px; }
+.split p { background: var(--surface); border: 1px solid var(--rule); border-radius: 10px; padding: 10px 14px; color: var(--ink-2); font-size: 0.92rem; }
+.walk { list-style: none; padding: 0; margin: 32px 0 0; position: relative; }
+.walk::before { content: ""; position: absolute; left: 17px; top: 8px; bottom: 8px; border-left: 2px solid var(--rule); }
+.walk-step { display: grid; grid-template-columns: 36px 1fr; gap: 16px; margin-bottom: 26px; position: relative; }
+.walk-n { width: 36px; height: 36px; border-radius: 50%; background: var(--accent); color: #fff; display: grid; place-items: center; font-weight: 700; }
+.walk-body { background: var(--surface); border: 1px solid var(--rule); border-radius: 14px; padding: 18px 20px; min-width: 0; }
+.walk-body p { color: var(--ink-2); margin-top: 6px; }
+.walk-data { color: var(--ink) !important; font-weight: 500; }
+.walk-quote { margin: 10px 0 0; padding: 10px 14px; border-left: 3px solid var(--accent); background: var(--page); color: var(--ink-2); font-size: 0.9rem; border-radius: 0 8px 8px 0; }
+.walk-found { margin: 10px 0 0; padding-left: 20px; color: var(--ink); font-size: 0.92rem; }
+.walk-found li { margin-bottom: 6px; }
+.walk-answer { margin-top: 10px; padding: 12px 14px; border-radius: 10px; background: var(--accent-soft); }
+.walk-answer .answer-text { margin-top: 0; }
+.walk-file { font-size: 0.82rem; color: var(--ink-3) !important; margin-top: 10px !important; }
+code { font-size: 0.85em; background: var(--page); border: 1px solid var(--rule); border-radius: 4px; padding: 1px 5px; overflow-wrap: anywhere; }

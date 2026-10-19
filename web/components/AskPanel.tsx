@@ -16,7 +16,6 @@ type Turn = AskResult & { error?: string; mode: Mode };
 export default function AskPanel() {
   const [question, setQuestion] = useState("");
   const [mode, setMode] = useState<Mode>("answer");
-  const [regulator, setRegulator] = useState("");
   const [status, setStatus] = useState<{ ai: boolean; chunks: number } | null>(null);
   const [turns, setTurns] = useState<Turn[]>([]);
   const [busy, setBusy] = useState(false);
@@ -34,7 +33,7 @@ export default function AskPanel() {
       const res = await fetch("/api/ask", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ question: text, mode, regulator: regulator || undefined }),
+        body: JSON.stringify({ question: text, mode }),
       });
       const data = await res.json();
       setTurns((t) => [{ ...data, question: text, mode }, ...t]);
@@ -54,13 +53,10 @@ export default function AskPanel() {
           onKeyDown={(e) => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); ask(question); } }} />
         <div className="ask-controls">
           <div className="segmented" role="group" aria-label="Mode">
-            <button type="button" aria-pressed={mode === "answer"} onClick={() => setMode("answer")}>Answer</button>
+            <button type="button" aria-pressed={mode === "answer"} onClick={() => setMode("answer")} title="Search once, answer once (RAG)">Answer</button>
             <button type="button" aria-pressed={mode === "agent"} onClick={() => setMode("agent")}
               title={status?.ai ? "Claude plans and searches in several steps" : "Needs the AI key on this deployment"}>Agent</button>
           </div>
-          <select aria-label="Regulator" value={regulator} onChange={(e) => setRegulator(e.target.value)}>
-            <option value="">RBI + SEBI</option><option value="RBI">RBI only</option><option value="SEBI">SEBI only</option>
-          </select>
           <button className="btn-primary" type="submit" disabled={busy || !question.trim()}>{busy ? "Searching…" : "Ask"}</button>
         </div>
       </form>
@@ -72,7 +68,7 @@ export default function AskPanel() {
       {status && (
         <p className="status-line">
           {status.chunks.toLocaleString("en-IN")} passages indexed ·{" "}
-          {status.ai ? "AI writer on (Claude), with agent mode" : "No AI key on this deployment: answers quote the regulation word for word"}
+          {status.ai ? "Answers written by Claude · Agent mode available" : "Quote mode: answers are the regulation's own sentences, word for word (no AI key on this site)"}
         </p>
       )}
 

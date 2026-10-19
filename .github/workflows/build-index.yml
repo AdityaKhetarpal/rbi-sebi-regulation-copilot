@@ -1,5 +1,5 @@
 # Every Monday (or on demand): download the current RBI Master Directions, rebuild the search index,
-# re-run the evaluation, test the website on the real data, and commit the results only if the scores stay high.
+# re-test it, check the website on the real data, and commit the results only if the scores stay high.
 name: Build index
 
 on:
@@ -27,16 +27,11 @@ jobs:
       - uses: actions/cache@v4
         with:
           path: ~/.cache/huggingface
-          key: hf-models-${{ hashFiles('copilot/config.py') }}
+          key: hf-models-${{ hashFiles('pipeline/settings.py') }}
 
-      - name: Download, chunk and embed
-        run: python scripts/build_index.py
-
-      # quality gate: if RBI's page changes and a wrong PDF is picked up, scores drop and nothing is committed
-      - name: Evaluate the full pipeline
-        run: python scripts/run_eval.py --min-accuracy 90
-        env:
-          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}   # optional: without it the extractive engine is scored
+      # steps 1-4 and 7; stops (and publishes nothing) if any test score is below 90%
+      - name: Build and test (pipeline/build_all.py)
+        run: python pipeline/build_all.py --min-score 90
 
       - uses: actions/setup-node@v7
         with:
@@ -51,7 +46,7 @@ jobs:
         run: |
           git config user.name "Aditya Khetarpal"
           git config user.email "80028073+AdityaKhetarpal@users.noreply.github.com"
-          git add data/index data/eval/report.json web/public/data
+          git add data/downloads.json data/pages.csv data/chunks.csv data/vectors.npy data/test_report.json web/public/data
           if git diff --cached --quiet; then echo "Nothing changed."; exit 0; fi
           git commit -m "Rebuild index $(date -u +%Y-%m-%d)"
           git push

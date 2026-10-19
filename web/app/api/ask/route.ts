@@ -3,8 +3,8 @@
 
 import Anthropic from "@anthropic-ai/sdk";
 import { Searcher } from "@/lib/search";
-import { validateQuestion } from "@/lib/prompt";
-import { agent, answer, type LLM } from "@/lib/copilot";
+import { answer, validateQuestion, type LLM } from "@/lib/answer";
+import { agent } from "@/lib/agent";
 import chunks from "@/public/data/chunks.json";
 import documents from "@/public/data/documents.json";
 import type { Chunk, Doc } from "@/lib/types";
@@ -35,22 +35,21 @@ export async function POST(request: Request) {
   if (!check.ok) return Response.json({ error: check.error }, { status: 400 });
   if (!searcher.chunks.length) return Response.json({ error: "The document index hasn't been built yet." }, { status: 503 });
 
-  const regulator = body?.regulator === "RBI" || body?.regulator === "SEBI" ? body.regulator : undefined;
   const ip = request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ?? "local";
   const client: LLM | null = process.env.ANTHROPIC_API_KEY && allowed(ip) ? (new Anthropic() as unknown as LLM) : null;
 
   if (body?.mode === "agent") {
     if (!client) {
-      const r = await answer(check.question, searcher, null, regulator);
+      const r = await answer(check.question, searcher, null);
       return Response.json({ ...r, note: "Agent mode needs the AI key, so this is the single-step answer." });
     }
     try {
       return Response.json(await agent(check.question, searcher, client, docs));
     } catch (err) {
       console.error("[ask] agent failed:", err);
-      const r = await answer(check.question, searcher, null, regulator);
+      const r = await answer(check.question, searcher, null);
       return Response.json({ ...r, note: "The agent was unavailable, so this is the single-step answer." });
     }
   }
-  return Response.json(await answer(check.question, searcher, client, regulator));
+  return Response.json(await answer(check.question, searcher, client));
 }

@@ -1,4 +1,4 @@
-# Every push: test the Python pipeline (with small fake models, no downloads) and build the website.
+# Every push: test the 8 pipeline steps (with tiny fake models, no downloads) and build the website.
 name: CI
 
 on:

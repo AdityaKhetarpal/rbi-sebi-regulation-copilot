@@ -3,12 +3,12 @@
 import { describe, expect, it } from "vitest";
 import { readFileSync } from "node:fs";
 import { Searcher, RELEVANCE } from "@/lib/search";
-import { answer } from "@/lib/copilot";
+import { answer } from "@/lib/answer";
 import chunks from "@/public/data/chunks.json";
 import type { Chunk } from "@/lib/types";
 
 type Q = { id: string; kind: "fact" | "refuse"; question: string; must_include?: string[] };
-const questions: Q[] = JSON.parse(readFileSync(new URL("../../data/eval/questions.json", import.meta.url), "utf-8"));
+const questions: Q[] = JSON.parse(readFileSync(new URL("../../data/test_questions.json", import.meta.url), "utf-8"));
 const norm = (t: string) => t.toLowerCase().replace(/[\s,/-]/g, "");
 const real = (chunks as Chunk[]).length > 0;
 

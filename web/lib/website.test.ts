@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { Searcher, coverage, extractive, splitSentences, tokenize } from "@/lib/search";
-import { REFUSAL, buildContext, citations, numbered, validateQuestion } from "@/lib/prompt";
-import { agent, answer, runTool, type LLM } from "@/lib/copilot";
+import { REFUSAL, answer, buildContext, citations, numbered, validateQuestion, type LLM } from "@/lib/answer";
+import { agent, runTool } from "@/lib/agent";
 import type { Chunk } from "@/lib/types";
 
 const CHUNKS: Chunk[] = [

@@ -1,5 +1,6 @@
-// Keyword retrieval for the website: BM25 (the same formula as the Python rank_bm25 library),
-// plus a relevance check that lets the site say "not in the documents" instead of guessing.
+// STEP 5 on the website - find the best passages for a question (same idea as pipeline/step5_search.py).
+// The website uses keyword search (BM25, the classic search-engine formula) so it runs instantly without
+// loading AI models, plus a relevance check that lets it say "not in the documents" instead of guessing.
 
 import type { Chunk } from "@/lib/types";
 
