@@ -35,6 +35,16 @@ def embed_question(question):
     return embed_texts([QUESTION_PREFIX + question])[0]
 
 
+def map_2d(vectors):
+    """Squash 384 numbers per chunk down to 2 (x, y) so all chunks can be drawn as dots on a map.
+    PCA: find the 2 directions in which the chunks differ the most, and measure each chunk along them.
+    Chunks that mean similar things land close together."""
+    centred = vectors - vectors.mean(axis=0)
+    _, _, directions = np.linalg.svd(centred, full_matrices=False)
+    xy = centred @ directions[:2].T
+    return (xy - xy.min(axis=0)) / (xy.max(axis=0) - xy.min(axis=0))     # scale both axes to 0..1
+
+
 def similarity_demo():
     """See it work: A and B mean the same with different words, C is a different topic."""
     sentences = ["KYC must be updated periodically for high-risk customers",

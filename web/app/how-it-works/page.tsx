@@ -3,6 +3,8 @@ import type { Metadata } from "next";
 import { Searcher } from "@/lib/search";
 import { answer } from "@/lib/answer";
 import AnswerText from "@/components/AnswerText";
+import PassageMap from "@/components/PassageMap";
+import DocBars from "@/components/DocBars";
 import chunks from "@/public/data/chunks.json";
 import documents from "@/public/data/documents.json";
 import meta from "@/public/data/meta.json";
@@ -40,14 +42,17 @@ export default async function HowPage() {
 
   return (
     <>
-      <p className="eyebrow">How it works</p>
+      <section className="hero hero-small"><div className="wrap">
+      <p className="eyebrow-chip">How it works</p>
       <h1>Follow one question through the system.</h1>
       <p className="lead">
         The idea is called <strong>RAG</strong> (retrieval-augmented generation): look the rule up in the official
         documents first, then answer only from what was found, like an open-book exam. Here is the real path of one
         question: <em>&ldquo;{QUESTION}&rdquo;</em>
       </p>
+      </div></section>
 
+      <div className="wrap">
       <div className="split">
         <p><strong>Steps 1–4</strong> prepare the library once a week.</p>
         <p><strong>Steps 5–6</strong> run every time someone asks.</p>
@@ -69,10 +74,14 @@ export default async function HowPage() {
           <p>A 100-page rulebook is too much to read for every question, so each page is cut into passages of about {meta.chunk_words} words. Neighbouring passages overlap a little, so no rule gets cut in half.</p>
           <p className="walk-data">{meta.chunks.toLocaleString("en-IN")} passages. For example, <code>{example?.id ?? "RBI_KYC_Master_Direction_p41_c0"}</code>:</p>
           {example && <blockquote className="walk-quote">{example.text.slice(0, 320)}…</blockquote>}
+          <p>Passages per document:</p>
+          <DocBars docs={docs} />
         </Step>
 
         <Step n={4} title="Turn passages into numbers" file="step4_embed.py">
           <p>A free AI model turns each passage into 384 numbers that capture its meaning. Passages that mean the same thing get similar numbers, even with different words. That lets &ldquo;how often must KYC be updated&rdquo; match &ldquo;periodic updation of KYC shall be carried out…&rdquo;.</p>
+          <p>Squash those 384 numbers down to 2 and you can draw every passage as a dot. The orange dots are the passages step 5 finds for our question:</p>
+          <PassageMap highlight={found.map((c) => c.id)} />
         </Step>
 
         <Step n={5} title="Search for the best passages" file="step5_search.py">
@@ -123,6 +132,7 @@ export default async function HowPage() {
           </p>
         </div>
       </section>
+      </div>
     </>
   );
 }

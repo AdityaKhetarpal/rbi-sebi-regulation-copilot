@@ -4,6 +4,8 @@ import documents from "@/public/data/documents.json";
 import meta from "@/public/data/meta.json";
 import report from "@/public/data/eval.json";
 import type { Doc, TestReport } from "@/lib/types";
+import Kpis from "@/components/Kpis";
+import DocBars from "@/components/DocBars";
 
 export const metadata: Metadata = { title: "Results · Regulation Copilot" };
 
@@ -14,16 +16,21 @@ export default function ResultsPage() {
   const r = report as unknown as TestReport;
   return (
     <>
-      <p className="eyebrow">Results</p>
-      <h1>What it has read, and how well it answers.</h1>
+      <section className="hero hero-small"><div className="wrap">
+        <p className="eyebrow-chip">Results</p>
+        <h1>What it has read, and how well it answers.</h1>
+        <Kpis />
+      </div></section>
 
-      <section className="section" style={{ marginTop: 32 }}>
+      <div className="wrap">
+      <section className="section" style={{ marginTop: 40 }}>
         <h2>The documents</h2>
         <p className="body">
           {docs.length} RBI rulebooks, {meta.pages.toLocaleString("en-IN")} pages, cut into {meta.chunks.toLocaleString("en-IN")} passages.
           Downloaded fresh from rbi.org.in every Monday{meta.built_on ? `; last built ${meta.built_on}` : ""}.
         </p>
-        <div className="panel table-wrap" style={{ marginTop: 14, padding: 8 }}>
+        <div className="panel" style={{ marginTop: 14 }}><DocBars docs={docs} /></div>
+        <div className="panel table-wrap" style={{ marginTop: 12, padding: 8 }}>
           <table>
             <thead><tr><th>Document</th><th className="num">Pages</th><th className="num">Passages</th><th>Official PDF</th></tr></thead>
             <tbody>
@@ -62,7 +69,7 @@ export default function ResultsPage() {
               {r.results.map((t) => (
                 <tr key={t.id}>
                   <td>{t.question}<div className="muted">{t.kind === "refuse" ? "must refuse" : "known answer"}</div></td>
-                  <td><span className={t.right ? "pass" : "fail"}>{t.right ? "Pass" : "Fail"}</span></td>
+                  <td><span className={`tag ${t.right ? "tag-ok" : "tag-refused"}`}>{t.right ? "✓ pass" : "✕ fail"}</span></td>
                   <td className="muted answer-cell">{t.answer.slice(0, 200)}{t.answer.length > 200 ? "…" : ""}</td>
                 </tr>
               ))}
@@ -72,6 +79,7 @@ export default function ResultsPage() {
         </div>
         <p className="note">Scored on the full Python pipeline (meaning + keyword search, re-ranker, quote mode). The website&apos;s keyword search is checked on the same questions in its own tests.</p>
       </section>
+      </div>
     </>
   );
 }

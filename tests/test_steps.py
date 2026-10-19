@@ -122,3 +122,14 @@ def test_step8_agent_stops_after_max_steps():
     loop = NS(stop_reason="tool_use", content=[NS(type="tool_use", id="t", name="read_chunk", input={"chunk_id": "x"})])
     out = step8_agent.run_agent("loop", client=FakeClaude([loop] * 3), max_steps=3)
     assert out["answer"].startswith("Stopped")
+
+
+# ---------- step 4: the 2D map used by the website ----------
+def test_step4_map_puts_similar_chunks_close_together():
+    import numpy as np
+    import step4_embed
+    vectors = np.array([[1, 0, 0], [0.9, 0.1, 0], [0, 0, 1], [0, 0.1, 0.9]], dtype=float)
+    xy = step4_embed.map_2d(vectors)
+    assert xy.shape == (4, 2) and xy.min() >= 0 and xy.max() <= 1
+    near, far = np.linalg.norm(xy[0] - xy[1]), np.linalg.norm(xy[0] - xy[2])
+    assert near < far

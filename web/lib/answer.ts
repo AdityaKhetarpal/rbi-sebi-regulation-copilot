@@ -53,7 +53,9 @@ function refusal(question: string, sources: Source[], engine = "relevance check"
 }
 
 export async function answer(question: string, s: Searcher, client: LLM | null): Promise<AskResult> {
-  const sources = numbered(s.search(question, TOP_K));                   // R
+  const hits = s.scored(question, TOP_K);                                            // R
+  const best = hits[0]?.score || 1;
+  const sources = numbered(hits.map((h) => h.chunk)).map((src, i) => ({ ...src, match: hits[i].score / best }));
   if (!sources.length || s.relevance(question, sources) < RELEVANCE) return refusal(question, sources);
 
   if (client) {

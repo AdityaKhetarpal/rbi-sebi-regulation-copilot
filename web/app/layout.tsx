@@ -2,6 +2,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import "@fontsource-variable/inter";
+import "@fontsource-variable/jetbrains-mono"; // numbers, labels and code
 import "./globals.css";
 import Nav from "@/components/Nav";
 import meta from "@/public/data/meta.json";
@@ -17,11 +18,11 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       <body>
         <header className="site-header">
           <div className="wrap">
-            <Link href="/" className="site-name"><span className="site-mark" aria-hidden="true">§</span>Regulation Copilot</Link>
+            <Link href="/" className="site-name"><span className="site-mark" aria-hidden="true">§</span>Regulation<span className="name-accent">Copilot</span></Link>
             <Nav />
           </div>
         </header>
-        <main className="wrap">{children}</main>
+        <main>{children}</main>
         <footer className="site-footer">
           <div className="wrap footer-row">
             <p className="footer-by">Built by <strong>Aditya Khetarpal</strong></p>

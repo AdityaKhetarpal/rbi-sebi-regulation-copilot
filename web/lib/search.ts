@@ -93,14 +93,18 @@ export class Searcher {
     this.bm = new BM25(chunks.map((c) => c.text));
   }
 
-  search(question: string, k = 5, regulator?: string): Chunk[] {
+  // the k best chunks with their keyword score (higher = better match)
+  scored(question: string, k = 5, regulator?: string): { chunk: Chunk; score: number }[] {
     const s = this.bm.scores(question);
     return this.chunks
-      .map((c, i) => ({ c, s: s[i] }))
-      .filter((x) => x.s > 0 && (!regulator || x.c.regulator.toUpperCase() === regulator.toUpperCase()))
-      .sort((a, b) => b.s - a.s)
-      .slice(0, k)
-      .map((x) => x.c);
+      .map((chunk, i) => ({ chunk, score: s[i] }))
+      .filter((x) => x.score > 0 && (!regulator || x.chunk.regulator.toUpperCase() === regulator.toUpperCase()))
+      .sort((a, b) => b.score - a.score)
+      .slice(0, k);
+  }
+
+  search(question: string, k = 5, regulator?: string): Chunk[] {
+    return this.scored(question, k, regulator).map((x) => x.chunk);
   }
 
   // best coverage among the found chunks: are the documents actually about this?

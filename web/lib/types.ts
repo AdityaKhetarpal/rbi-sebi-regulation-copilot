@@ -10,7 +10,7 @@ export type Doc = {
 export type TestRow = { id: string; kind: "fact" | "refuse"; question: string; method: string; answer: string; found: boolean | null; right: boolean };
 export type TestReport = { summary: { questions: number; found_pct: number | null; right_pct: number | null; refused_pct: number | null } | null; results: TestRow[]; run_on: string | null };
 
-export type Source = Chunk & { n: number };
+export type Source = Chunk & { n: number; match?: number }; // match: 0-1, relative to the best passage
 export type Citation = { n: number; id: string; title: string; page: number };
 export type Step = { step: number; tool: string; input: Record<string, unknown>; preview: string };
 
