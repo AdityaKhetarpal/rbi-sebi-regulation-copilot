@@ -2,7 +2,7 @@
 
 **Ask a question about India's banking rules, and get the answer from the official rulebook, with the page number.**
 
-**Live site:** [X] (add the Vercel link after deploying)
+**Live site:** https://rbi-sebi-regulation-copilot.vercel.app/
 
 ---
 
