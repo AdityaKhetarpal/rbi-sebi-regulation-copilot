@@ -24,7 +24,7 @@
      "chunk_id": "RBI_KYC_Master_Direction_p41_c0"
     }
    ],
-   "seconds": 13.49
+   "seconds": 9.29
   },
   {
    "id": "kyc_medium_risk",
@@ -49,7 +49,7 @@
      "chunk_id": "RBI_KYC_Master_Direction_p44_c1"
     }
    ],
-   "seconds": 2.19
+   "seconds": 2.02
   },
   {
    "id": "kyc_low_risk",
@@ -68,7 +68,7 @@
      "chunk_id": "RBI_KYC_Master_Direction_p41_c0"
     }
    ],
-   "seconds": 2.14
+   "seconds": 2.02
   },
   {
    "id": "ppi_monthly_load",
@@ -93,7 +93,7 @@
      "chunk_id": "RBI_PPI_Master_Direction_p10_c0"
     }
    ],
-   "seconds": 2.47
+   "seconds": 2.34
   },
   {
    "id": "ppi_yearly_load",
@@ -118,7 +118,7 @@
      "chunk_id": "RBI_PPI_Master_Direction_p10_c0"
     }
    ],
-   "seconds": 2.32
+   "seconds": 2.16
   },
   {
    "id": "ppi_cash_withdrawal",
@@ -137,7 +137,7 @@
      "chunk_id": "RBI_PPI_Master_Direction_p12_c0"
     }
    ],
-   "seconds": 2.39
+   "seconds": 2.14
   },
   {
    "id": "fraud_theft_report",
@@ -162,7 +162,7 @@
      "chunk_id": "RBI_Fraud_Risk_Management_p7_c0"
     }
    ],
-   "seconds": 2.51
+   "seconds": 2.34
   },
   {
    "id": "fraud_scn_time",
@@ -181,7 +181,7 @@
      "chunk_id": "RBI_Fraud_Risk_Management_p7_c0"
     }
    ],
-   "seconds": 2.21
+   "seconds": 2.06
   },
   {
    "id": "off_repo_rate",
@@ -193,7 +193,7 @@
    "refused": true,
    "answer": "I couldn't find this in the provided RBI/SEBI documents.",
    "citations": [],
-   "seconds": 1.51
+   "seconds": 1.43
   },
   {
    "id": "off_gst_restaurant",
@@ -205,7 +205,7 @@
    "refused": true,
    "answer": "I couldn't find this in the provided RBI/SEBI documents.",
    "citations": [],
-   "seconds": 1.82
+   "seconds": 1.71
   },
   {
    "id": "off_cricket",
@@ -217,7 +217,7 @@
    "refused": true,
    "answer": "I couldn't find this in the provided RBI/SEBI documents.",
    "citations": [],
-   "seconds": 1.82
+   "seconds": 1.73
   }
  ],
  "run_on": "2026-10-19",
