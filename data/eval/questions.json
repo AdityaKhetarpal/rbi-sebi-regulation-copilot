@@ -1,0 +1,13 @@
+[
+  {"id": "kyc_high_risk", "kind": "fact", "question": "How often must KYC be updated for high-risk customers?", "expect_doc": "KYC", "must_include": ["two years"]},
+  {"id": "kyc_medium_risk", "kind": "fact", "question": "How often is periodic updation of KYC required for medium risk customers?", "expect_doc": "KYC", "must_include": ["eight years"]},
+  {"id": "kyc_low_risk", "kind": "fact", "question": "How often is periodic updation of KYC required for low risk customers?", "expect_doc": "KYC", "must_include": ["10 years"]},
+  {"id": "ppi_monthly_load", "kind": "fact", "question": "What is the maximum amount that can be loaded in a small PPI in a month?", "expect_doc": "PPI", "must_include": ["10,000"]},
+  {"id": "ppi_yearly_load", "kind": "fact", "question": "What is the total amount that can be loaded in a small PPI during a financial year?", "expect_doc": "PPI", "must_include": ["1,20,000"]},
+  {"id": "ppi_cash_withdrawal", "kind": "fact", "question": "What is the cash withdrawal limit per transaction for non-bank PPIs?", "expect_doc": "PPI", "must_include": ["2,000"]},
+  {"id": "fraud_theft_report", "kind": "fact", "question": "Within how many days must a bank report theft, burglary or robbery to RBI?", "expect_doc": "Fraud", "must_include": ["seven days"]},
+  {"id": "fraud_scn_time", "kind": "fact", "question": "How much time must a bank give a person to reply to a show cause notice before classifying a fraud?", "expect_doc": "Fraud", "must_include": ["21 days"]},
+  {"id": "off_repo_rate", "kind": "refuse", "question": "What is the current repo rate?"},
+  {"id": "off_gst_restaurant", "kind": "refuse", "question": "What is the GST rate on restaurant bills?"},
+  {"id": "off_cricket", "kind": "refuse", "question": "Who won the IPL final in 2024?"}
+]

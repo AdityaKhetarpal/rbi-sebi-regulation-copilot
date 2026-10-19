@@ -1,0 +1,16 @@
+# downloaded PDFs (re-downloaded by the workflow; hand-added PDFs go in data/pdfs_manual/ and ARE committed)
+data/pdfs/
+
+# Python
+__pycache__/
+.pytest_cache/
+.venv/
+.ipynb_checkpoints/
+
+# website build output
+web/node_modules/
+web/.next/
+
+# secrets
+.env
+.env.*
