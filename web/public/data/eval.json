@@ -1,10 +1,10 @@
 {
  "summary": {
   "questions": 11,
-  "retrieval_hit_rate_pct": 100.0,
-  "answer_accuracy_pct": 100.0,
+  "retrieval_hit_rate_pct": 62.5,
+  "answer_accuracy_pct": 62.5,
   "refusal_accuracy_pct": 100.0,
-  "overall_pct": 100.0
+  "overall_pct": 72.7
  },
  "results": [
   {
@@ -24,7 +24,7 @@
      "chunk_id": "RBI_KYC_Master_Direction_p41_c0"
     }
    ],
-   "seconds": 13.49
+   "seconds": 7.89
   },
   {
    "id": "kyc_medium_risk",
@@ -49,7 +49,7 @@
      "chunk_id": "RBI_KYC_Master_Direction_p44_c1"
     }
    ],
-   "seconds": 2.19
+   "seconds": 1.74
   },
   {
    "id": "kyc_low_risk",
@@ -68,76 +68,43 @@
      "chunk_id": "RBI_KYC_Master_Direction_p41_c0"
     }
    ],
-   "seconds": 2.14
+   "seconds": 1.69
   },
   {
    "id": "ppi_monthly_load",
    "kind": "fact",
    "question": "What is the maximum amount that can be loaded in a small PPI in a month?",
-   "engine": "Extractive (exact sentences, no AI)",
-   "retrieval_hit": true,
-   "answer_correct": true,
-   "refused": false,
-   "answer": "11 d) The amount loaded in such PPIs during any month shall not exceed Rs.10,000 and the total amount loaded during the financial year shall not exceed Rs.1,20,000; [1] d) Amount loaded in such PPIs during any month shall not exceed Rs.10,000/- and the total amount loaded during the financial year shall not exceed Rs.1,20,000/-; [4]",
-   "citations": [
-    {
-     "n": 1,
-     "title": "PPI Master Direction",
-     "page": 11,
-     "chunk_id": "RBI_PPI_Master_Direction_p11_c0"
-    },
-    {
-     "n": 4,
-     "title": "PPI Master Direction",
-     "page": 10,
-     "chunk_id": "RBI_PPI_Master_Direction_p10_c0"
-    }
-   ],
-   "seconds": 2.47
+   "engine": "retrieval threshold",
+   "retrieval_hit": false,
+   "answer_correct": false,
+   "refused": true,
+   "answer": "I couldn't find this in the provided RBI/SEBI documents.",
+   "citations": [],
+   "seconds": 1.23
   },
   {
    "id": "ppi_yearly_load",
    "kind": "fact",
    "question": "What is the total amount that can be loaded in a small PPI during a financial year?",
-   "engine": "Extractive (exact sentences, no AI)",
-   "retrieval_hit": true,
-   "answer_correct": true,
-   "refused": false,
-   "answer": "11 d) The amount loaded in such PPIs during any month shall not exceed Rs.10,000 and the total amount loaded during the financial year shall not exceed Rs.1,20,000; [1] d) Amount loaded in such PPIs during any month shall not exceed Rs.10,000/- and the total amount loaded during the financial year shall not exceed Rs.1,20,000/-; [3]",
-   "citations": [
-    {
-     "n": 1,
-     "title": "PPI Master Direction",
-     "page": 11,
-     "chunk_id": "RBI_PPI_Master_Direction_p11_c0"
-    },
-    {
-     "n": 3,
-     "title": "PPI Master Direction",
-     "page": 10,
-     "chunk_id": "RBI_PPI_Master_Direction_p10_c0"
-    }
-   ],
-   "seconds": 2.32
+   "engine": "retrieval threshold",
+   "retrieval_hit": false,
+   "answer_correct": false,
+   "refused": true,
+   "answer": "I couldn't find this in the provided RBI/SEBI documents.",
+   "citations": [],
+   "seconds": 1.2
   },
   {
    "id": "ppi_cash_withdrawal",
    "kind": "fact",
    "question": "What is the cash withdrawal limit per transaction for non-bank PPIs?",
-   "engine": "Extractive (exact sentences, no AI)",
-   "retrieval_hit": true,
-   "answer_correct": true,
-   "refused": false,
-   "answer": "n) In case of non-bank issued PPIs, cash withdrawal shall be permitted upto a maximum limit of Rs.2,000/- per transaction within an overall monthly limit of Rs.10,000/- per PPI across all channels (agents, ATMs, PoS devices, etc.); [1] However, cash withdrawal at PoS devices shall be subjected to a limit of Rs.2,000/- per transaction within an overall monthly limit of Rs.10,000/- across all locations (Tier 1 to 6 centres), subject to conditions stipulated in RBI circular DPSS.CO.PD.No.449/02.14.003/201516 dated August 27, 2015; [1]",
-   "citations": [
-    {
-     "n": 1,
-     "title": "PPI Master Direction",
-     "page": 12,
-     "chunk_id": "RBI_PPI_Master_Direction_p12_c0"
-    }
-   ],
-   "seconds": 2.39
+   "engine": "retrieval threshold",
+   "retrieval_hit": false,
+   "answer_correct": false,
+   "refused": true,
+   "answer": "I couldn't find this in the provided RBI/SEBI documents.",
+   "citations": [],
+   "seconds": 1.19
   },
   {
    "id": "fraud_theft_report",
@@ -162,7 +129,7 @@
      "chunk_id": "RBI_Fraud_Risk_Management_p7_c0"
     }
    ],
-   "seconds": 2.51
+   "seconds": 2.01
   },
   {
    "id": "fraud_scn_time",
@@ -181,7 +148,7 @@
      "chunk_id": "RBI_Fraud_Risk_Management_p7_c0"
     }
    ],
-   "seconds": 2.21
+   "seconds": 1.61
   },
   {
    "id": "off_repo_rate",
@@ -193,7 +160,7 @@
    "refused": true,
    "answer": "I couldn't find this in the provided RBI/SEBI documents.",
    "citations": [],
-   "seconds": 1.51
+   "seconds": 1.22
   },
   {
    "id": "off_gst_restaurant",
@@ -205,7 +172,7 @@
    "refused": true,
    "answer": "I couldn't find this in the provided RBI/SEBI documents.",
    "citations": [],
-   "seconds": 1.82
+   "seconds": 1.31
   },
   {
    "id": "off_cricket",
@@ -217,7 +184,7 @@
    "refused": true,
    "answer": "I couldn't find this in the provided RBI/SEBI documents.",
    "citations": [],
-   "seconds": 1.82
+   "seconds": 1.52
   }
  ],
  "run_on": "2026-10-19",

@@ -1,8 +1,8 @@
 {
  "built_on": "2026-10-19",
  "documents": 4,
- "pages": 193,
- "chunks": 314,
+ "pages": 169,
+ "chunks": 267,
  "embed_model": "BAAI/bge-small-en-v1.5",
  "rerank_model": "cross-encoder/ms-marco-MiniLM-L-6-v2",
  "chunk_words": 300,
