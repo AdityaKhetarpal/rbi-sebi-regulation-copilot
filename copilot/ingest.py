@@ -26,7 +26,9 @@ def find_pdf(page: str, topic: str, window: int = 3000):
     """Find the topic on RBI's list page and return (pdf_url, title) of the first matching Direction."""
     for size in (window, window * 3):                                   # second try with a wider window
         for m in re.finditer(re.escape(topic), page, flags=re.I):
-            title = clean_title(page[m.start(): m.start() + 200])
+            # the title starts after the previous tag, e.g. "Reserve Bank of India (Know Your Customer) Directions"
+            begin = max(page.rfind(">", max(0, m.start() - 200), m.start()) + 1, m.start() - 200)
+            title = clean_title(page[begin: m.start() + 200])
             if any(w in title.lower() for w in config.SKIP_WORDS):      # amendments, ombudsman etc.
                 continue
             pdf = PDF_LINK.search(page[m.start(): m.start() + size])

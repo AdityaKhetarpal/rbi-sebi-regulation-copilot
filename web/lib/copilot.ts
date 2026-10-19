@@ -6,6 +6,7 @@ import { Searcher, RELEVANCE, extractive } from "@/lib/search";
 import { REFUSAL, SYSTEM, buildContext, citations, numbered } from "@/lib/prompt";
 
 export const MODEL = process.env.ASK_MODEL ?? "claude-haiku-5-5";
+export const TOP_K = 6; // keyword search needs one more passage than the Python hybrid search (measured on the eval set)
 
 // the only part of the Anthropic client we use, so tests can pass a fake
 type Block = { type: string; text?: string; id?: string; name?: string; input?: Record<string, unknown> };
@@ -19,7 +20,7 @@ function refusal(question: string, sources: Source[], engine = "relevance check"
 
 // ---------- RAG: one search, one answer ----------
 export async function answer(question: string, s: Searcher, client: LLM | null, regulator?: string): Promise<AskResult> {
-  const sources = numbered(s.search(question, 5, regulator));                       // R
+  const sources = numbered(s.search(question, TOP_K, regulator));                   // R
   if (!sources.length || s.relevance(question, sources) < RELEVANCE) return refusal(question, sources);
 
   if (client) {

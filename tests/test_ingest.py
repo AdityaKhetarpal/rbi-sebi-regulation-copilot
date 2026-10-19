@@ -4,7 +4,7 @@ from copilot.ingest import clean_title, document_list, find_pdf, load_pages
 
 PAGE = """
 <td>Know Your Customer (KYC) - Ombudsman Directions <a href='https://rbidocs.rbi.org.in/rdocs/PDFs/OMB.PDF'>pdf</a></td>
-<td>Know Your Customer) Directions, 2025 (Updated as on October 1, 2026) <a id='APDF_1' href='https://rbidocs.rbi.org.in/rdocs/notification/PDFs/169MD.PDF'>pdf</a></td>
+<td>Reserve Bank of India (Know Your Customer) Directions, 2025 (Updated as on October 1, 2026) <a id='APDF_1' href='https://rbidocs.rbi.org.in/rdocs/notification/PDFs/169MD.PDF'>pdf</a></td>
 """
 
 
@@ -12,6 +12,7 @@ def test_find_pdf_skips_ombudsman_and_finds_main_direction():
     url, title = find_pdf(PAGE, "Know Your Customer")
     assert url.endswith("169MD.PDF")
     assert "Updated as on October 1, 2026" in title
+    assert title.startswith("Reserve Bank of India (Know Your Customer)")
     assert "<a" not in title
 
 

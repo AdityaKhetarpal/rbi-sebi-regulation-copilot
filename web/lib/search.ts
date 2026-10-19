@@ -7,7 +7,8 @@ export const tokenize = (text: string): string[] => text.toLowerCase().match(/[a
 
 const STOP = new Set(["the", "a", "an", "of", "in", "to", "is", "are", "what", "how", "for", "must", "be", "by", "on",
   "and", "or", "can", "does", "do", "which", "who", "when", "within", "under", "with", "as", "at", "it", "that",
-  "many", "much", "there", "any", "i", "my", "we", "this", "from", "per", "will", "should", "about"]);
+  "many", "much", "there", "any", "i", "my", "we", "this", "from", "per", "will", "should", "about", "why", "where",
+  "whom", "whose", "has", "have", "was", "were", "if", "than", "then", "so", "its", "into", "our", "your", "their"]);
 
 // "updated" and "updation" should count as the same word: compare the first 5 letters
 const stem = (w: string) => {
@@ -82,7 +83,7 @@ export function coverage(question: string, text: string, bm: BM25): number {
   return total > 0 ? found / total : 0;
 }
 
-export const RELEVANCE = 0.3; // below this, "not in the documents". Calibrated: real questions 0.4-0.8, off-topic 0.0-0.1
+export const RELEVANCE = 0.5; // below this, "not in the documents". Calibrated on the real index: real questions 0.62-1.0, off-topic 0.18-0.38
 const SENTENCE_FLOOR = 0.25; // a quoted sentence must cover at least this much of the question
 
 export class Searcher {

@@ -63,7 +63,7 @@ describe("prompt helpers", () => {
 
 describe("answer without an AI key", () => {
   it("answers from exact sentences", async () => {
-    const r = await answer("What is the maximum amount that can be loaded in a small PPI in a month?", s, null);
+    const r = await answer("What amount can be loaded in PPIs during any month?", s, null);
     expect(r.engine).toMatch(/Extractive/);
     expect(r.answer).toContain("Rs.10,000");
     expect(r.citations[0].page).toBe(11);

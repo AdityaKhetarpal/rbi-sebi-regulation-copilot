@@ -51,11 +51,19 @@ question ──► meaning search + keyword search ──► merge (RRF) ──�
 
 ## Results
 
-See the Evaluation page. Latest: [X]% right passage in the top 5, [X]% answers with the right fact, [X]% off-topic questions refused.
+First build (19 Oct 2026): 4 RBI Master Directions, 193 pages, 314 passages.
+
+| Measure (11 questions) | Python pipeline, extractive engine |
+|---|---|
+| Right passage in the top 5 | 8/8 (100%) |
+| Answer contains the right fact | 8/8 (100%) |
+| Off-topic questions refused | 3/3 (100%) |
+
+The website's keyword-only search is tested on the same questions on every rebuild (`web/lib/real-data.test.ts`). It finds the right passage for all 8 within its top 6 and refuses all 3 off-topic questions. The set is small, so these are checks, not benchmark scores. The Digital Lending Directions were not found on RBI's page by the downloader; add the PDF to `data/pdfs_manual/` to include it.
 
 ## Limitations
 
-- Only the documents on the Documents page are covered (RBI: KYC, Prepaid Payment Instruments, Fraud Risk Management, Payment Aggregators; SEBI when added).
+- Only the documents on the Documents page are covered (RBI: KYC, Prepaid Payment Instruments, Fraud Risk Management, Payment Aggregators; SEBI master circulars once added to `data/pdfs_manual/`).
 - Scanned PDFs can't be searched; the Documents page flags them.
 - Changes made after a Master Direction's last update may be missing until RBI updates it.
 - Information, not legal advice.
