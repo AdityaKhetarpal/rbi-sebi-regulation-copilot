@@ -13,6 +13,7 @@
   --accent: #5b4bdb;
   --accent-2: #12a594;
   --accent-soft: #efedfd;
+  --mark: #9a8cff;          /* logo on the dark header, same in both themes */
   --ok: #138a4c;
   --ok-soft: #e6f5ec;
   --bad: #c02f2f;
@@ -78,7 +79,8 @@ code { font-family: var(--mono); font-size: 0.82em; background: var(--surface-2)
 .site-header .wrap { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 24px; min-height: 60px; }
 .site-name { display: flex; align-items: center; gap: 8px; font-weight: 700; color: var(--hero-ink); text-decoration: none; letter-spacing: -0.01em; }
 .name-accent { color: var(--accent-2); font-family: var(--mono); font-weight: 600; font-size: 0.92em; }
-.site-mark { display: inline-grid; place-items: center; width: 28px; height: 28px; border-radius: 8px; background: linear-gradient(135deg, #6d5ef0, #12a594); color: #fff; font-family: Georgia, serif; font-weight: 700; margin-right: 2px; }
+.site-mark { display: block; width: 28px; height: 28px; flex: none; margin-right: 2px; }
+.site-mark svg { display: block; width: 100%; height: 100%; }
 .site-nav { display: flex; gap: 2px; }
 .site-nav a { color: var(--hero-ink-2); text-decoration: none; padding: 7px 12px; border-radius: 8px; font-weight: 500; white-space: nowrap; font-size: 0.95rem; }
 .site-nav a:hover { color: var(--hero-ink); background: rgba(255, 255, 255, 0.06); }

@@ -5,6 +5,7 @@ import "@fontsource-variable/inter";
 import "@fontsource-variable/jetbrains-mono"; // numbers, labels and code
 import "./globals.css";
 import Nav from "@/components/Nav";
+import SiteMark from "@/components/SiteMark";
 import meta from "@/public/data/meta.json";
 
 export const metadata: Metadata = {
@@ -18,7 +19,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       <body>
         <header className="site-header">
           <div className="wrap">
-            <Link href="/" className="site-name"><span className="site-mark" aria-hidden="true">§</span>Regulation<span className="name-accent">Copilot</span></Link>
+            <Link href="/" className="site-name"><SiteMark />Regulation<span className="name-accent">Copilot</span></Link>
             <Nav />
           </div>
         </header>
