@@ -7,6 +7,7 @@ import "./globals.css";
 import Nav from "@/components/Nav";
 import SiteMark from "@/components/SiteMark";
 import meta from "@/public/data/meta.json";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 export const metadata: Metadata = {
   title: "RBI/SEBI Regulation Copilot",
@@ -39,6 +40,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
             </p>
           </div>
         </footer>
+        <SpeedInsights />
       </body>
     </html>
   );
